@@ -143,6 +143,11 @@
         <DCCReference Include="infra\db\interfaces\untDatabaseBootstrap.pas"/>
         <DCCReference Include="infra\firebird\untDatabaseBootstrapFirebird.pas"/>
         <DCCReference Include="infra\db\untScriptExecutor.pas"/>
+        <DCCReference Include="infra\db\datamodules\uDMBase.pas">
+            <Form>DMBase</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -10,7 +10,8 @@ uses
   untConnectionManager in 'infra\db\untConnectionManager.pas',
   untDatabaseBootstrap in 'infra\db\interfaces\untDatabaseBootstrap.pas',
   untDatabaseBootstrapFirebird in 'infra\firebird\untDatabaseBootstrapFirebird.pas',
-  untScriptExecutor in 'infra\db\untScriptExecutor.pas';
+  untScriptExecutor in 'infra\db\untScriptExecutor.pas',
+  uDMBase in 'infra\db\datamodules\uDMBase.pas' {DMBase: TDataModule};
 
 {$R *.res}
 
@@ -24,5 +25,6 @@ begin
 
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TDMBase, DMBase);
   Application.Run;
 end.
