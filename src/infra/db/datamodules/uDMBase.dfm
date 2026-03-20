@@ -1,4 +1,4 @@
 object DMBase: TDMBase
-  Height = 480
-  Width = 640
+  Height = 168
+  Width = 235
 end

@@ -148,6 +148,24 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="domain\untCliente.pas"/>
+        <DCCReference Include="repositories\interfaces\untClienteRepository.pas"/>
+        <DCCReference Include="repositories\untClienteRepositoryFirebird.pas"/>
+        <DCCReference Include="services\untClienteServiceImpl.pas"/>
+        <DCCReference Include="views\frmListaClientes.pas">
+            <Form>fListaClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="infra\db\datamodules\uDMCliente.pas">
+            <Form>DMCliente</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="views\frmCliente.pas">
+            <Form>fCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="services\interfaces\untClienteService.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

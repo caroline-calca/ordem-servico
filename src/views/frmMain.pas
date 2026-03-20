@@ -16,7 +16,8 @@ uses
   Vcl.ExtCtrls,
 
   untUtils,
-  frmConfig;
+  frmConfig,
+  frmListaClientes;
 
 type
   TfMain = class(TForm)
@@ -24,7 +25,6 @@ type
     mmMain: TMainMenu;
     Cadastros1: TMenuItem;
     mnClientes: TMenuItem;
-    mnItens: TMenuItem;
     N1: TMenuItem;
     mnOrdensServico: TMenuItem;
     Sistema1: TMenuItem;
@@ -32,6 +32,7 @@ type
     Configuraes2: TMenuItem;
     mnSobre: TMenuItem;
     procedure mnConfiguracoesClick(Sender: TObject);
+    procedure mnClientesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,6 +45,14 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfMain.mnClientesClick(Sender: TObject);
+begin
+  if not Assigned(fListaClientes) then
+    fListaClientes := TfListaClientes.Create(Self);
+
+  fListaClientes.Show;
+end;
 
 procedure TfMain.mnConfiguracoesClick(Sender: TObject);
 begin

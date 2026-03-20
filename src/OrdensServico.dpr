@@ -11,7 +11,15 @@ uses
   untDatabaseBootstrap in 'infra\db\interfaces\untDatabaseBootstrap.pas',
   untDatabaseBootstrapFirebird in 'infra\firebird\untDatabaseBootstrapFirebird.pas',
   untScriptExecutor in 'infra\db\untScriptExecutor.pas',
-  uDMBase in 'infra\db\datamodules\uDMBase.pas' {DMBase: TDataModule};
+  uDMBase in 'infra\db\datamodules\uDMBase.pas' {DMBase: TDataModule},
+  untCliente in 'domain\untCliente.pas',
+  untClienteRepository in 'repositories\interfaces\untClienteRepository.pas',
+  untClienteRepositoryFirebird in 'repositories\untClienteRepositoryFirebird.pas',
+  untClienteServiceImpl in 'services\untClienteServiceImpl.pas',
+  frmListaClientes in 'views\frmListaClientes.pas' {fListaClientes},
+  uDMCliente in 'infra\db\datamodules\uDMCliente.pas' {DMCliente: TDataModule},
+  frmCliente in 'views\frmCliente.pas' {fCliente},
+  untClienteService in 'services\interfaces\untClienteService.pas';
 
 {$R *.res}
 
@@ -24,7 +32,9 @@ begin
     Exit;
 
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfMain, fMain);
   Application.CreateForm(TDMBase, DMBase);
+  Application.CreateForm(TDMCliente, DMCliente);
+  Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TfCliente, fCliente);
   Application.Run;
 end.

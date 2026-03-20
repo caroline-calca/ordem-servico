@@ -29,9 +29,7 @@ object fMain: TfMain
       Caption = 'Cadastros'
       object mnClientes: TMenuItem
         Caption = 'Clientes'
-      end
-      object mnItens: TMenuItem
-        Caption = 'Itens'
+        OnClick = mnClientesClick
       end
       object N1: TMenuItem
         Caption = '-'
