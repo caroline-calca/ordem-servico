@@ -13,7 +13,10 @@ uses
   Vcl.Forms,
   Vcl.Dialogs,
   Vcl.Menus,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls,
+
+  untUtils,
+  frmConfig;
 
 type
   TfMain = class(TForm)
@@ -24,6 +27,11 @@ type
     mnItens: TMenuItem;
     N1: TMenuItem;
     mnOrdensServico: TMenuItem;
+    Sistema1: TMenuItem;
+    mnConfiguracoes: TMenuItem;
+    Configuraes2: TMenuItem;
+    mnSobre: TMenuItem;
+    procedure mnConfiguracoesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,5 +44,16 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfMain.mnConfiguracoesClick(Sender: TObject);
+begin
+  if TfConfig.Executar = mrOk then
+  begin
+    ShowMsg('As configurações foram alteradas.' + sLineBreak +
+            'O sistema será encerrado para aplicar as mudanças.', mtInfo);
+
+    Application.Terminate;
+  end;
+end;
 
 end.

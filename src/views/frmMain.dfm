@@ -1,19 +1,19 @@
 object fMain: TfMain
   Left = 0
   Top = 0
-  Caption = 'Solu'#231#227'o de Ordens de Servi'#231'o'
+  Caption = '[000] Solu'#231#227'o de Ordens de Servi'#231'o'
   ClientHeight = 342
   ClientWidth = 427
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
-  Font.Name = 'Segoe UI'
+  Font.Name = 'Calibri Light'
   Font.Style = []
   Menu = mmMain
   Position = poScreenCenter
   WindowState = wsMaximized
-  TextHeight = 15
+  TextHeight = 14
   object pnlMain: TPanel
     Left = 0
     Top = 0
@@ -21,8 +21,6 @@ object fMain: TfMain
     Height = 342
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 120
-    ExplicitHeight = 0
   end
   object mmMain: TMainMenu
     Left = 56
@@ -40,6 +38,19 @@ object fMain: TfMain
       end
       object mnOrdensServico: TMenuItem
         Caption = 'Ordens de Servi'#231'o'
+      end
+    end
+    object Sistema1: TMenuItem
+      Caption = 'Sistema'
+      object mnConfiguracoes: TMenuItem
+        Caption = 'Configura'#231#245'es'
+        OnClick = mnConfiguracoesClick
+      end
+      object Configuraes2: TMenuItem
+        Caption = '-'
+      end
+      object mnSobre: TMenuItem
+        Caption = 'Sobre'
       end
     end
   end

@@ -1,0 +1,7 @@
+[database]
+database=C:\Users\carol\Desktop\ordem-servico\bin\db_os.fdb
+username=SYSDBA
+password=masterkey
+server=localhost
+port=3050
+clientlibrary=C:\Users\carol\Desktop\ordem-servico\bin\fbclient.dll

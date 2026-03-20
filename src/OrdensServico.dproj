@@ -132,6 +132,17 @@
             <Form>fMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="views\frmConfig.pas">
+            <Form>fConfig</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="infra\common\untAppBootstrap.pas"/>
+        <DCCReference Include="infra\common\untUtils.pas"/>
+        <DCCReference Include="infra\config\untConfigManager.pas"/>
+        <DCCReference Include="infra\db\untConnectionManager.pas"/>
+        <DCCReference Include="infra\db\interfaces\untDatabaseBootstrap.pas"/>
+        <DCCReference Include="infra\firebird\untDatabaseBootstrapFirebird.pas"/>
+        <DCCReference Include="infra\db\untScriptExecutor.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -158,7 +169,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="4">
-                <DeployFile LocalName="Win32\Debug\OrdensServico.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\bin\OrdensServico.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>OrdensServico.exe</RemoteName>
                         <Overwrite>true</Overwrite>
