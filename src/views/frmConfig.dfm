@@ -17,7 +17,7 @@ object fConfig: TfConfig
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   TextHeight = 15
-  object Panel1: TPanel
+  object pnlTopo: TPanel
     Left = 0
     Top = 0
     Width = 548
@@ -38,7 +38,7 @@ object fConfig: TfConfig
       ParentFont = False
     end
   end
-  object Panel2: TPanel
+  object pnlConfig: TPanel
     Left = 0
     Top = 41
     Width = 548
@@ -209,7 +209,7 @@ object fConfig: TfConfig
       OnClick = btnClientLibraryClick
     end
   end
-  object Panel4: TPanel
+  object pnlInferior: TPanel
     Left = 0
     Top = 216
     Width = 548

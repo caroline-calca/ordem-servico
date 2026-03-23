@@ -45,7 +45,9 @@ begin
     Exit;
 
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TDMBase, DMBase);
+  Application.CreateForm(TDMCliente, DMCliente);
   Application.CreateForm(TDMOrdemServico, DMOrdemServico);
+  Application.CreateForm(TfMain, fMain);
   Application.Run;
 end.

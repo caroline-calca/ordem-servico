@@ -14,7 +14,7 @@ object fCliente: TfCliente
   Position = poMainFormCenter
   OnKeyDown = FormKeyDown
   TextHeight = 15
-  object Panel1: TPanel
+  object pnlTopo: TPanel
     Left = 0
     Top = 0
     Width = 635
@@ -35,7 +35,7 @@ object fCliente: TfCliente
       ParentFont = False
     end
   end
-  object Panel2: TPanel
+  object pnlCliente: TPanel
     Left = 0
     Top = 41
     Width = 635
@@ -127,7 +127,7 @@ object fCliente: TfCliente
       TabOrder = 2
     end
   end
-  object Panel4: TPanel
+  object pnlInferior: TPanel
     Left = 0
     Top = 150
     Width = 635

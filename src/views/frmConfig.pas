@@ -34,14 +34,14 @@ uses
 
 type
   TfConfig = class(TForm)
-    Panel1: TPanel;
+    pnlTopo: TPanel;
     Label1: TLabel;
-    Panel2: TPanel;
+    pnlConfig: TPanel;
     Label2: TLabel;
     Label3: TLabel;
     edtDatabase: TEdit;
     edtUsername: TEdit;
-    Panel4: TPanel;
+    pnlInferior: TPanel;
     btnCancelar: TButton;
     btnSalvar: TButton;
     edtPassword: TEdit;
@@ -137,7 +137,7 @@ begin
       ShowMsg('Conexão realizada com sucesso!', mtInfo);
     except
       on E: Exception do
-        ShowMsg('Erro ao conectar: ' +#13#10+ E.Message, mtErr);
+        ShowMsg('Erro ao conectar: ' +sLineBreak+ E.Message, mtErr);
     end;
 
   finally

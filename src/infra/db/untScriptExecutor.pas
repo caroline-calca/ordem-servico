@@ -22,7 +22,7 @@ begin
   ScriptPath := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'sql\db.sql';
 
   if not FileExists(ScriptPath) then
-    raise Exception.Create('Arquivo de script não encontrado: ' +#13#10+ ScriptPath);
+    raise Exception.Create('Arquivo de script não encontrado: ' +sLineBreak+ ScriptPath);
 
   Script := TStringList.Create;
   Comandos := TStringList.Create;

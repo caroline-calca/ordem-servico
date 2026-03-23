@@ -21,9 +21,9 @@ uses
 
 type
   TfCliente = class(TForm)
-    Panel1: TPanel;
+    pnlTopo: TPanel;
     Label1: TLabel;
-    Panel2: TPanel;
+    pnlCliente: TPanel;
     Label2: TLabel;
     Label3: TLabel;
     Label5: TLabel;
@@ -32,7 +32,7 @@ type
     edtDocumento: TEdit;
     edtEmail: TEdit;
     edtTelefone: TEdit;
-    Panel4: TPanel;
+    pnlInferior: TPanel;
     btnCancelar: TButton;
     btnSalvar: TButton;
     procedure btnSalvarClick(Sender: TObject);
@@ -106,7 +106,7 @@ begin
     ModalResult := mrOk;
   except
     on E: Exception do
-      ShowMsg('Erro ao salvar o cliente: ' +#13#10+ E.Message, mtErr);
+      ShowMsg('Erro ao salvar o cliente: ' +sLineBreak+ E.Message, mtErr);
   end;
 end;
 

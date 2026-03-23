@@ -27,7 +27,7 @@ object fListaOrdemServico: TfListaOrdemServico
     ExplicitTop = 345
     ExplicitWidth = 103
   end
-  object Panel1: TPanel
+  object pnlTopo: TPanel
     Left = 0
     Top = 0
     Width = 1089
@@ -94,7 +94,7 @@ object fListaOrdemServico: TfListaOrdemServico
       OnKeyDown = dbgOSKeyDown
     end
   end
-  object Panel4: TPanel
+  object pnlInferior: TPanel
     Left = 0
     Top = 616
     Width = 1089

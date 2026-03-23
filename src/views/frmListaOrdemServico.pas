@@ -30,10 +30,10 @@ uses
 
 type
   TfListaOrdemServico = class(TForm)
-    Panel1: TPanel;
+    pnlTopo: TPanel;
     pnlOS: TPanel;
     dbgOS: TDBGrid;
-    Panel4: TPanel;
+    pnlInferior: TPanel;
     btnNovo: TButton;
     btnEditar: TButton;
     btnExcluir: TButton;

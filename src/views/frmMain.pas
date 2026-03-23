@@ -18,7 +18,7 @@ uses
   untUtils,
   frmConfig,
   frmListaClientes,
-  frmListaOrdemServico;
+  frmListaOrdemServico, Vcl.StdCtrls, Vcl.Buttons;
 
 type
   TfMain = class(TForm)
@@ -32,11 +32,18 @@ type
     mnConfiguracoes: TMenuItem;
     Configuraes2: TMenuItem;
     mnSobre: TMenuItem;
+    GroupBox1: TGroupBox;
+    btnClientes: TBitBtn;
+    btnOrdemServico: TBitBtn;
+    btnConfiguracoes: TBitBtn;
     procedure mnConfiguracoesClick(Sender: TObject);
     procedure mnClientesClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure mnSobreClick(Sender: TObject);
     procedure mnOrdensServicoClick(Sender: TObject);
+    procedure btnClientesClick(Sender: TObject);
+    procedure btnOrdemServicoClick(Sender: TObject);
+    procedure btnConfiguracoesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -49,6 +56,21 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfMain.btnClientesClick(Sender: TObject);
+begin
+  mnClientesClick(Sender);
+end;
+
+procedure TfMain.btnConfiguracoesClick(Sender: TObject);
+begin
+  mnConfiguracoesClick(Sender);
+end;
+
+procedure TfMain.btnOrdemServicoClick(Sender: TObject);
+begin
+  mnOrdensServicoClick(Sender);
+end;
 
 procedure TfMain.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin

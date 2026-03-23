@@ -16,7 +16,7 @@ object fListaClientes: TfListaClientes
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   TextHeight = 15
-  object Panel1: TPanel
+  object pnlTopo: TPanel
     Left = 0
     Top = 0
     Width = 947
@@ -80,7 +80,7 @@ object fListaClientes: TfListaClientes
       OnClick = btnPesquisarClick
     end
   end
-  object Panel2: TPanel
+  object pnlGrade: TPanel
     Left = 0
     Top = 41
     Width = 947
@@ -106,7 +106,7 @@ object fListaClientes: TfListaClientes
       OnKeyDown = dbgClientesKeyDown
     end
   end
-  object Panel4: TPanel
+  object pnlInferior: TPanel
     Left = 0
     Top = 400
     Width = 947

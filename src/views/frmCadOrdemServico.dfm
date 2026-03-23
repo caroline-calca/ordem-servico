@@ -16,7 +16,7 @@ object fOrdemServico: TfOrdemServico
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   TextHeight = 15
-  object Panel1: TPanel
+  object pnlTopo: TPanel
     Left = 0
     Top = 0
     Width = 676
@@ -249,7 +249,7 @@ object fOrdemServico: TfOrdemServico
       TabOrder = 4
     end
   end
-  object Panel4: TPanel
+  object pnlInferior: TPanel
     Left = 0
     Top = 475
     Width = 676

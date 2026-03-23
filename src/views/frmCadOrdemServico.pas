@@ -37,11 +37,11 @@ uses
 
 type
   TfOrdemServico = class(TForm)
-    Panel1: TPanel;
+    pnlTopo: TPanel;
     Label1: TLabel;
     pnlOS: TPanel;
     Label2: TLabel;
-    Panel4: TPanel;
+    pnlInferior: TPanel;
     btnCancelar: TButton;
     btnSalvar: TButton;
     pnlItens: TPanel;

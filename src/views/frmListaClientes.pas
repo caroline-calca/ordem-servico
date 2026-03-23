@@ -28,9 +28,9 @@ uses
 
 type
   TfListaClientes = class(TForm)
-    Panel1: TPanel;
-    Panel2: TPanel;
-    Panel4: TPanel;
+    pnlTopo: TPanel;
+    pnlGrade: TPanel;
+    pnlInferior: TPanel;
     Label1: TLabel;
     edtNome: TEdit;
     btnPesquisar: TBitBtn;
@@ -80,7 +80,7 @@ begin
     Listar;
   except
     on E: Exception do
-      ShowMsg('Erro ao excluir o cliente: ' +#13#10+ E.Message, mtErr);
+      ShowMsg('Erro ao excluir o cliente: ' +sLineBreak+ E.Message, mtErr);
   end;
 end;
 
