@@ -113,7 +113,7 @@ begin
 end;
 
 procedure TfMain.mnSobreClick(Sender: TObject);
-const TempoTotalDev = '20 horas';
+const TempoTotalDev = '36 horas';
 begin
   ShowMsg('Sistema de Ordens de Serviço' + sLineBreak +
           'Versão: 1.0' + sLineBreak +
@@ -121,10 +121,10 @@ begin
           'Desenvolvido como prova técnica para vaga de Desenvolvedor Delphi.' + sLineBreak +
           sLineBreak +
           'Tecnologias utilizadas:' + sLineBreak +
-          '- Delphi (VCL)' + sLineBreak +
+          '- Delphi 12 Community Edition' + sLineBreak +
           '- FireDAC' + sLineBreak +
-          '- Fast Report' + sLineBreak +
-          '- Banco de dados Firebird' + sLineBreak +
+          '- Fortes Report Community Edition' + sLineBreak +
+          '- Banco de dados Firebird 3.0' + sLineBreak +
           sLineBreak +
           'Funcionalidades:' + sLineBreak +
           '- Cadastro de clientes' + sLineBreak +

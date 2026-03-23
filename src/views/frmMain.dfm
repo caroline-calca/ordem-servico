@@ -24,8 +24,6 @@ object fMain: TfMain
     Height = 272
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 427
-    ExplicitHeight = 342
     object GroupBox1: TGroupBox
       Left = 16
       Top = 16
