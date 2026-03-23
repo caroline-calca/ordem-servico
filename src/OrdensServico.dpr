@@ -21,7 +21,6 @@ uses
   untCliente in 'domain\entities\untCliente.pas',
   untClienteFiltro in 'domain\filters\untClienteFiltro.pas',
   untClienteServiceFactory in 'services\factories\untClienteServiceFactory.pas',
-  uDMCliente in 'infra\db\datamodules\uDMCliente.pas' {DMCliente: TDataModule},
   untOrdemServico in 'domain\entities\untOrdemServico.pas',
   untOrdemServicoItem in 'domain\entities\untOrdemServicoItem.pas',
   untOrdemServicoFiltro in 'domain\filters\untOrdemServicoFiltro.pas',
@@ -33,7 +32,8 @@ uses
   frmListaOrdemServico in 'views\frmListaOrdemServico.pas' {fListaOrdemServico},
   frmCadOrdemServico in 'views\frmCadOrdemServico.pas' {fOrdemServico},
   frmRelOrdemServico in 'views\reports\frmRelOrdemServico.pas' {fRelOrdemServico},
-  uDMOrdemServico in 'infra\db\datamodules\uDMOrdemServico.pas' {DMOrdemServico: TDataModule};
+  uDMOrdemServico in 'infra\db\datamodules\uDMOrdemServico.pas' {DMOrdemServico: TDataModule},
+  uDMCliente in 'infra\db\datamodules\uDMCliente.pas' {DMCliente: TDataModule};
 
 {$R *.res}
 
@@ -47,8 +47,8 @@ begin
 
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDMBase, DMBase);
-  Application.CreateForm(TDMCliente, DMCliente);
   Application.CreateForm(TfMain, fMain);
   Application.CreateForm(TDMOrdemServico, DMOrdemServico);
+  Application.CreateForm(TDMCliente, DMCliente);
   Application.Run;
 end.

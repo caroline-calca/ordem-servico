@@ -27,7 +27,7 @@ uses
   untOrdemServicoServiceFactory,
   untOrdemServicoFiltro,
   frmCadOrdemServico,
-  frmRelOrdemServico;
+  frmRelOrdemServico, Vcl.Samples.Spin;
 
 type
   TfListaOrdemServico = class(TForm)
@@ -78,6 +78,11 @@ type
     dbgItens: TDBGrid;
     Splitter1: TSplitter;
     Label13: TLabel;
+    spnRegPorPagina: TSpinEdit;
+    Label14: TLabel;
+    lblTotalPaginas: TLabel;
+    spnPaginaAtual: TSpinEdit;
+    Label15: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -93,11 +98,17 @@ type
     procedure FormShow(Sender: TObject);
     procedure dbgOSDblClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
+    procedure spnPaginaAtualChange(Sender: TObject);
+    procedure spnRegPorPaginaChange(Sender: TObject);
   private
-    function ObterStatusSelecionados: TArray<TStatusOS>;
-    function MontarFiltro: TOrdemServicoFiltro;
+    FTotalPaginas: Integer;
+
     procedure Listar;
     procedure ListarRelatorio;
+    procedure AtualizarTotalPaginas;
+    procedure InicializarPaginacao;
+    function ObterStatusSelecionados: TArray<TStatusOS>;
+    function MontarFiltro: TOrdemServicoFiltro;
   public
     { Public declarations }
   end;
@@ -149,7 +160,6 @@ begin
 
   frmRelOS := TfRelOrdemServico.Create(nil);
   try
-   // RLDataSource1.DataSet := qryOS;
     frmRelOS.rlRelOrdemServico.Preview;
   finally
     frmRelOS.Free;
@@ -206,8 +216,22 @@ end;
 
 procedure TfListaOrdemServico.FormCreate(Sender: TObject);
 begin
-  Listar;
+  InicializarPaginacao;
   LimparDateTimePickers(Self);
+end;
+
+procedure TfListaOrdemServico.InicializarPaginacao;
+begin
+  FTotalPaginas := 1;
+
+  spnPaginaAtual.Value := cPaginaPadrao;
+  spnPaginaAtual.MinValue := 1;
+  spnPaginaAtual.MaxValue := FTotalPaginas;
+
+  spnRegPorPagina.Value := cRegPorPaginaPadrao;
+  spnRegPorPagina.MinValue := 1;
+
+  Listar;
 end;
 
 procedure TfListaOrdemServico.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -289,11 +313,20 @@ end;
 
 procedure TfListaOrdemServico.Listar;
 var
+  PaginaAtual,
+  RegPorPagina: Integer;
   Filtro: TOrdemServicoFiltro;
 begin
+  PaginaAtual := spnPaginaAtual.Value;
+  RegPorPagina := spnRegPorPagina.Value;
+
   Filtro := MontarFiltro;
   try
-    DMOrdemServico.Listar(Filtro);
+    DMOrdemServico.Listar(Filtro,
+      RetornarOffset(PaginaAtual, RegPorPagina),
+      RegPorPagina);
+
+    AtualizarTotalPaginas;
   finally
     Filtro.Free;
   end;
@@ -306,6 +339,30 @@ begin
   Filtro := MontarFiltro;
   try
     DMOrdemServico.ListarRelatorio(Filtro);
+  finally
+    Filtro.Free;
+  end;
+end;
+
+procedure TfListaOrdemServico.AtualizarTotalPaginas;
+var
+  RegPorPagina,
+  TotalRegistros: Integer;
+  Filtro: TOrdemServicoFiltro;
+begin
+  Filtro := MontarFiltro;
+  try
+    RegPorPagina := spnRegPorPagina.Value;
+    TotalRegistros := DMOrdemServico.Contar(Filtro);
+
+    FTotalPaginas := RetornarTotalPaginas(TotalRegistros, RegPorPagina);
+
+    spnPaginaAtual.MaxValue := FTotalPaginas;
+
+    if (spnPaginaAtual.Value > FTotalPaginas) then
+      spnPaginaAtual.Value := cPaginaPadrao;
+
+    lblTotalPaginas.Caption := 'de ' + IntToStr(FTotalPaginas);
   finally
     Filtro.Free;
   end;
@@ -338,6 +395,29 @@ begin
   finally
     Lista.Free;
   end;
+end;
+
+procedure TfListaOrdemServico.spnPaginaAtualChange(Sender: TObject);
+begin
+  if (spnPaginaAtual.Value < spnPaginaAtual.MinValue) then
+    spnPaginaAtual.Value := spnPaginaAtual.MinValue;
+
+  if (spnPaginaAtual.Value > spnPaginaAtual.MaxValue) then
+    spnPaginaAtual.Value := spnPaginaAtual.MaxValue;
+
+  Listar;
+end;
+
+procedure TfListaOrdemServico.spnRegPorPaginaChange(Sender: TObject);
+begin
+  if (spnRegPorPagina.Value < spnRegPorPagina.MinValue) then
+    spnRegPorPagina.Value := spnRegPorPagina.MinValue;
+
+  if (spnRegPorPagina.Value > spnRegPorPagina.MaxValue) then
+    spnRegPorPagina.Value := spnRegPorPagina.MaxValue;
+
+  spnPaginaAtual.Value := cPaginaPadrao;
+  Listar;
 end;
 
 end.

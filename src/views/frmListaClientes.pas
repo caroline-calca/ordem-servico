@@ -24,7 +24,7 @@ uses
   untClienteServiceFactory,
   untClienteFiltro,
 
-  frmCadCliente;
+  frmCadCliente, Vcl.Samples.Spin;
 
 type
   TfListaClientes = class(TForm)
@@ -39,6 +39,11 @@ type
     btnEditar: TButton;
     btnExcluir: TButton;
     Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    lblTotalPaginas: TLabel;
+    spnPaginaAtual: TSpinEdit;
+    spnRegPorPagina: TSpinEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure edtNomeKeyDown(Sender: TObject; var Key: Word;
@@ -51,8 +56,14 @@ type
       Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure dbgClientesDblClick(Sender: TObject);
+    procedure spnRegPorPaginaChange(Sender: TObject);
+    procedure spnPaginaAtualChange(Sender: TObject);
   private
+    FTotalPaginas: Integer;
+
     procedure Listar;
+    procedure AtualizarTotalPaginas;
+    procedure InicializarPaginacao;
   public
     { Public declarations }
   end;
@@ -137,8 +148,7 @@ begin
   end;
 end;
 
-procedure TfListaClientes.edtNomeKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfListaClientes.edtNomeKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = vk_return then
     btnPesquisarClick(Sender);
@@ -152,12 +162,78 @@ end;
 
 procedure TfListaClientes.FormCreate(Sender: TObject);
 begin
+  InicializarPaginacao;
+end;
+
+procedure TfListaClientes.InicializarPaginacao;
+begin
+  FTotalPaginas := 1;
+
+  spnPaginaAtual.Value := cPaginaPadrao;
+  spnPaginaAtual.MinValue := 1;
+  spnPaginaAtual.MaxValue := FTotalPaginas;
+
+  spnRegPorPagina.Value := cRegPorPaginaPadrao;
+  spnRegPorPagina.MinValue := 1;
+
   Listar;
 end;
 
 procedure TfListaClientes.Listar;
+var
+  PaginaAtual,
+  RegPorPagina: Integer;
 begin
-  DMCliente.Listar(TClienteFiltro.PorNome(edtNome.Text));
+  PaginaAtual := spnPaginaAtual.Value;
+  RegPorPagina := spnRegPorPagina.Value;
+
+  DMCliente.Listar(TClienteFiltro.PorNome(edtNome.Text),
+    RetornarOffset(PaginaAtual, RegPorPagina),
+    RegPorPagina
+  );
+
+  AtualizarTotalPaginas;
+end;
+
+procedure TfListaClientes.spnPaginaAtualChange(Sender: TObject);
+begin
+  if (spnPaginaAtual.Value < spnPaginaAtual.MinValue) then
+    spnPaginaAtual.Value := spnPaginaAtual.MinValue;
+
+  if (spnPaginaAtual.Value > spnPaginaAtual.MaxValue) then
+    spnPaginaAtual.Value := spnPaginaAtual.MaxValue;
+
+  Listar;
+end;
+
+procedure TfListaClientes.spnRegPorPaginaChange(Sender: TObject);
+begin
+  if (spnRegPorPagina.Value < spnRegPorPagina.MinValue) then
+    spnRegPorPagina.Value := spnRegPorPagina.MinValue;
+
+  if (spnRegPorPagina.Value > spnRegPorPagina.MaxValue) then
+    spnRegPorPagina.Value := spnRegPorPagina.MaxValue;
+
+  spnPaginaAtual.Value := cPaginaPadrao;
+  Listar;
+end;
+
+procedure TfListaClientes.AtualizarTotalPaginas;
+var
+  RegPorPagina,
+  TotalRegistros: Integer;
+begin
+  RegPorPagina := spnRegPorPagina.Value;
+  TotalRegistros := DMCliente.Contar(TClienteFiltro.PorNome(edtNome.Text));
+
+  FTotalPaginas := RetornarTotalPaginas(TotalRegistros, RegPorPagina);
+
+  spnPaginaAtual.MaxValue := FTotalPaginas;
+
+  if (spnPaginaAtual.Value > FTotalPaginas) then
+    spnPaginaAtual.Value := cPaginaPadrao;
+
+  lblTotalPaginas.Caption := 'de ' + IntToStr(FTotalPaginas);
 end;
 
 end.

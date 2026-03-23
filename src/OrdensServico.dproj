@@ -163,11 +163,6 @@
         <DCCReference Include="domain\entities\untCliente.pas"/>
         <DCCReference Include="domain\filters\untClienteFiltro.pas"/>
         <DCCReference Include="services\factories\untClienteServiceFactory.pas"/>
-        <DCCReference Include="infra\db\datamodules\uDMCliente.pas">
-            <Form>DMCliente</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="domain\entities\untOrdemServico.pas"/>
         <DCCReference Include="domain\entities\untOrdemServicoItem.pas"/>
         <DCCReference Include="domain\filters\untOrdemServicoFiltro.pas"/>
@@ -190,6 +185,11 @@
         </DCCReference>
         <DCCReference Include="infra\db\datamodules\uDMOrdemServico.pas">
             <Form>DMOrdemServico</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="infra\db\datamodules\uDMCliente.pas">
+            <Form>DMCliente</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>

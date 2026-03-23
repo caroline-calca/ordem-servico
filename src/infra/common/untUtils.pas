@@ -13,9 +13,14 @@ uses
 type
   TMsgType = (mtInfo, mtWarn, mtErr, mtQuest);
 
+  const cPaginaPadrao = 1;
+  const cRegPorPaginaPadrao = 50;
+
 procedure FormatarValorEdit(Edit: TEdit; RetornaVazio: Boolean = False);
 procedure NumbersOnlyValorEdit(Edit: TEdit; var Key: Char);
 procedure LimparDateTimePickers(AParent: TWinControl);
+function RetornarTotalPaginas(ATotalRegistros, ARegPorPagina: Integer): Integer;
+function RetornarOffset(APaginaAtual, ARegPorPagina: Integer): Integer;
 function ShowMsg(const Msg: string; MsgType: TMsgType): TModalResult;
 
 implementation
@@ -114,6 +119,18 @@ begin
       LimparDateTimePickers(TWinControl(AParent.Controls[i]));
     end;
   end;
+end;
+
+function RetornarTotalPaginas(ATotalRegistros, ARegPorPagina: Integer): Integer;
+var
+  vTotal: Integer;
+begin
+  Result := (ATotalRegistros div ARegPorPagina) + Ord((ATotalRegistros mod ARegPorPagina) > 0);
+end;
+
+function RetornarOffset(APaginaAtual, ARegPorPagina: Integer): Integer;
+begin
+  Result := (APaginaAtual-1) * ARegPorPagina;
 end;
 
 end.

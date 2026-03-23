@@ -48,19 +48,20 @@ object DMOrdemServico: TDMOrdemServico
     end
     object qryOSDATA_ABERTURA: TDateField
       DisplayLabel = 'Dt. Abertura'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'DATA_ABERTURA'
       Origin = 'DATA_ABERTURA'
       Required = True
     end
     object qryOSDATA_PREVISTA: TDateField
       DisplayLabel = 'Dt. Prevista'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'DATA_PREVISTA'
       Origin = 'DATA_PREVISTA'
     end
     object qryOSDATA_FECHAMENTO: TDateField
       DisplayLabel = 'Dt. Fechamento'
+      DisplayWidth = 15
       FieldName = 'DATA_FECHAMENTO'
       Origin = 'DATA_FECHAMENTO'
     end
@@ -73,7 +74,7 @@ object DMOrdemServico: TDMOrdemServico
     end
     object qryOSVALOR_TOTAL: TFMTBCDField
       DisplayLabel = 'Vlr. Total'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'VALOR_TOTAL'
       Origin = 'VALOR_TOTAL'
       DisplayFormat = '#,##0.00'
@@ -136,7 +137,7 @@ object DMOrdemServico: TDMOrdemServico
     end
     object qryItensQUANTIDADE: TFMTBCDField
       DisplayLabel = 'Quantidade'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'QUANTIDADE'
       Origin = 'QUANTIDADE'
       Required = True
@@ -146,7 +147,7 @@ object DMOrdemServico: TDMOrdemServico
     end
     object qryItensVALOR_UNITARIO: TFMTBCDField
       DisplayLabel = 'Vlr. Unit'#225'rio'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'VALOR_UNITARIO'
       Origin = 'VALOR_UNITARIO'
       Required = True
@@ -211,19 +212,20 @@ object DMOrdemServico: TDMOrdemServico
     end
     object DateField1: TDateField
       DisplayLabel = 'Dt. Abertura'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'DATA_ABERTURA'
       Origin = 'DATA_ABERTURA'
       Required = True
     end
     object DateField2: TDateField
       DisplayLabel = 'Dt. Prevista'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'DATA_PREVISTA'
       Origin = 'DATA_PREVISTA'
     end
     object DateField3: TDateField
       DisplayLabel = 'Dt. Fechamento'
+      DisplayWidth = 15
       FieldName = 'DATA_FECHAMENTO'
       Origin = 'DATA_FECHAMENTO'
     end
@@ -236,7 +238,7 @@ object DMOrdemServico: TDMOrdemServico
     end
     object FMTBCDField1: TFMTBCDField
       DisplayLabel = 'Vlr. Total'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'VALOR_TOTAL'
       Origin = 'VALOR_TOTAL'
       DisplayFormat = '#,##0.00'
@@ -299,7 +301,7 @@ object DMOrdemServico: TDMOrdemServico
     end
     object FMTBCDField2: TFMTBCDField
       DisplayLabel = 'Quantidade'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'QUANTIDADE'
       Origin = 'QUANTIDADE'
       Required = True
@@ -309,7 +311,7 @@ object DMOrdemServico: TDMOrdemServico
     end
     object FMTBCDField3: TFMTBCDField
       DisplayLabel = 'Vlr. Unit'#225'rio'
-      DisplayWidth = 10
+      DisplayWidth = 15
       FieldName = 'VALOR_UNITARIO'
       Origin = 'VALOR_UNITARIO'
       Required = True

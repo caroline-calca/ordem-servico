@@ -105,6 +105,46 @@ object fListaOrdemServico: TfListaOrdemServico
     DesignSize = (
       1089
       41)
+    object Label14: TLabel
+      Left = 171
+      Top = 12
+      Width = 109
+      Height = 15
+      Caption = 'Registros por p'#225'gina:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lblTotalPaginas: TLabel
+      Left = 107
+      Top = 12
+      Width = 57
+      Height = 15
+      AutoSize = False
+      Caption = 'de 1'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label15: TLabel
+      Left = 19
+      Top = 12
+      Width = 38
+      Height = 15
+      Caption = 'P'#225'gina:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      ParentFont = False
+    end
     object btnNovo: TButton
       Left = 840
       Top = 8
@@ -118,7 +158,7 @@ object fListaOrdemServico: TfListaOrdemServico
       Font.Name = 'Calibri Light'
       Font.Style = []
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 2
       OnClick = btnNovoClick
     end
     object btnEditar: TButton
@@ -134,7 +174,7 @@ object fListaOrdemServico: TfListaOrdemServico
       Font.Name = 'Calibri Light'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 3
       OnClick = btnEditarClick
     end
     object btnExcluir: TButton
@@ -150,8 +190,42 @@ object fListaOrdemServico: TfListaOrdemServico
       Font.Name = 'Calibri Light'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 4
       OnClick = btnExcluirClick
+    end
+    object spnRegPorPagina: TSpinEdit
+      Left = 286
+      Top = 9
+      Width = 41
+      Height = 24
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      MaxValue = 9999
+      MinValue = 1
+      ParentFont = False
+      TabOrder = 1
+      Value = 50
+      OnChange = spnRegPorPaginaChange
+    end
+    object spnPaginaAtual: TSpinEdit
+      Left = 63
+      Top = 9
+      Width = 41
+      Height = 24
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      MaxValue = 9999
+      MinValue = 1
+      ParentFont = False
+      TabOrder = 0
+      Value = 1
+      OnChange = spnPaginaAtualChange
     end
   end
   object pnlFiltros: TPanel

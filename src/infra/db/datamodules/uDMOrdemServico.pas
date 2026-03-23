@@ -68,10 +68,12 @@ type
     procedure qryRelOSAfterRefresh(DataSet: TDataSet);
     procedure qryRelOSAfterScroll(DataSet: TDataSet);
   private
-    procedure Listar(const AFiltro: TOrdemServicoFiltro; AQry: TFDQuery; AOrdem: String = ''); overload;
+    procedure Listar(const AFiltro: TOrdemServicoFiltro; AQry: TFDQuery; const AOffset, AFetch: Integer; AOrdem: String = ''); overload;
   public
-    procedure Listar(const AFiltro: TOrdemServicoFiltro); overload;
+    procedure Listar(const AFiltro: TOrdemServicoFiltro; const AOffset, AFetch: Integer); overload;
     procedure ListarRelatorio(const AFiltro: TOrdemServicoFiltro);
+    procedure Filtrar(AQry: TFDQuery; AFiltro: TOrdemServicoFiltro);
+    function Contar(const AFiltro: TOrdemServicoFiltro): Integer;
   end;
 
 var
@@ -123,20 +125,17 @@ begin
   qryRelItens.Open;
 end;
 
-procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro);
+procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro; const AOffset, AFetch: Integer);
 begin
-  Listar(AFiltro, qryOS);
+  Listar(AFiltro, qryOS, AOffset, AFetch);
 end;
 
 procedure TDMOrdemServico.ListarRelatorio(const AFiltro: TOrdemServicoFiltro);
 begin
-  Listar(AFiltro, qryRelOS, 'STATUS');
+  Listar(AFiltro, qryRelOS, 0, 0, 'STATUS');
 end;
 
-procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro; AQry: TFDQuery; AOrdem: String = '');
-var
-  i: Integer;
-  Params: string;
+procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro; AQry: TFDQuery; const AOffset, AFetch: Integer; AOrdem: String = '');
 begin
   if AOrdem = '' then
     AOrdem := 'ID DESC';
@@ -157,6 +156,44 @@ begin
   AQry.SQL.Add('FROM VW_OS_RESUMO');
   AQry.SQL.Add('WHERE 1=1');
 
+  Filtrar(AQry, AFiltro);
+
+  AQry.SQL.Add('ORDER BY ' + AOrdem);
+
+  if (AOffset > 0) or (AFetch > 0) then
+    AQry.SQL.Add(Format('OFFSET %d ROWS FETCH NEXT %d ROWS ONLY', [AOffset, AFetch]));
+
+  AQry.Open;
+end;
+
+function TDMOrdemServico.Contar(const AFiltro: TOrdemServicoFiltro): Integer;
+var
+  qryContar: TFDQuery;
+begin
+  qryContar := TFDQuery.Create(nil);
+  try
+    qryContar.Connection := Connection;
+    qryContar.SQL.Clear;
+
+    qryContar.SQL.Add('SELECT');
+    qryContar.SQL.Add('  COUNT(*) AS TOTAL');
+    qryContar.SQL.Add('FROM VW_OS_RESUMO');
+    qryContar.SQL.Add('WHERE 1=1');
+
+    Filtrar(qryContar, AFiltro);
+
+    qryContar.Open;
+    Result := qryContar.FieldByName('TOTAL').AsInteger;
+  finally
+    qryContar.Free;
+  end;
+end;
+
+procedure TDMOrdemServico.Filtrar(AQry: TFDQuery; AFiltro: TOrdemServicoFiltro);
+var
+  i: Integer;
+  Params: string;
+begin
   if Assigned(AFiltro) then
   begin
     // ID OS
@@ -254,10 +291,6 @@ begin
       end;
     end;
   end;
-
-  AQry.SQL.Add('ORDER BY ' + AOrdem);
-
-  AQry.Open;
 end;
 
 end.
