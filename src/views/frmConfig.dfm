@@ -10,9 +10,11 @@ object fConfig: TfConfig
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   TextHeight = 15
   object Panel1: TPanel
@@ -223,7 +225,7 @@ object fConfig: TfConfig
       Width = 100
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = 'Cancelar'
+      Caption = 'Cancelar [ESC]'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -239,7 +241,7 @@ object fConfig: TfConfig
       Width = 100
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = 'Salvar'
+      Caption = 'Salvar [F1]'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13

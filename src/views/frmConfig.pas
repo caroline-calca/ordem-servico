@@ -65,6 +65,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnTestarConexaoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     function DadosValidos: Boolean;
     function Salvar: Boolean;
@@ -255,6 +256,14 @@ begin
     edtClientLibrary.Text := Config.ClientLibrary;
   finally
     Config.Free;
+  end;
+end;
+
+procedure TfConfig.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    vk_escape: btnCancelarClick(Sender);
+    vk_f1: btnSalvarClick(Sender);
   end;
 end;
 
