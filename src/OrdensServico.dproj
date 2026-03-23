@@ -184,6 +184,10 @@
             <Form>fOrdemServico</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="views\reports\frmRelOrdemServico.pas">
+            <Form>fRelOrdemServico</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="infra\db\datamodules\uDMOrdemServico.pas">
             <Form>DMOrdemServico</Form>
             <FormType>dfm</FormType>

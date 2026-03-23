@@ -1,7 +1,7 @@
 object DMOrdemServico: TDMOrdemServico
   OnCreate = DataModuleCreate
-  Height = 240
-  Width = 231
+  Height = 217
+  Width = 421
   object qryOS: TFDQuery
     AfterOpen = qryOSAfterOpen
     AfterScroll = qryOSAfterScroll
@@ -163,6 +163,169 @@ object DMOrdemServico: TDMOrdemServico
   object dsItens: TDataSource
     DataSet = qryItens
     Left = 96
+    Top = 112
+  end
+  object qryRelOS: TFDQuery
+    AfterOpen = qryRelOSAfterOpen
+    AfterScroll = qryRelOSAfterScroll
+    AfterRefresh = qryRelOSAfterRefresh
+    SQL.Strings = (
+      'SELECT'
+      '  ID,'
+      '  CLIENTE_ID,'
+      '  CLIENTE_NOME,'
+      '  DATA_ABERTURA,'
+      '  DATA_PREVISTA,'
+      '  DATA_FECHAMENTO,'
+      '  STATUS,'
+      '  VALOR_TOTAL,'
+      '  EM_ATRASO'
+      'FROM VW_OS_RESUMO')
+    Left = 240
+    Top = 24
+    object IntegerField1: TIntegerField
+      DisplayLabel = 'Id'
+      DisplayWidth = 5
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object IntegerField2: TIntegerField
+      DisplayLabel = 'Id Cliente'
+      DisplayWidth = 5
+      FieldName = 'CLIENTE_ID'
+      Origin = 'CLIENTE_ID'
+      Required = True
+      Visible = False
+    end
+    object WideStringField1: TWideStringField
+      AutoGenerateValue = arDefault
+      DisplayLabel = 'Cliente'
+      DisplayWidth = 40
+      FieldName = 'CLIENTE_NOME'
+      Origin = 'NOME'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 120
+    end
+    object DateField1: TDateField
+      DisplayLabel = 'Dt. Abertura'
+      DisplayWidth = 10
+      FieldName = 'DATA_ABERTURA'
+      Origin = 'DATA_ABERTURA'
+      Required = True
+    end
+    object DateField2: TDateField
+      DisplayLabel = 'Dt. Prevista'
+      DisplayWidth = 10
+      FieldName = 'DATA_PREVISTA'
+      Origin = 'DATA_PREVISTA'
+    end
+    object DateField3: TDateField
+      DisplayLabel = 'Dt. Fechamento'
+      FieldName = 'DATA_FECHAMENTO'
+      Origin = 'DATA_FECHAMENTO'
+    end
+    object WideStringField2: TWideStringField
+      DisplayLabel = 'Status'
+      FieldName = 'STATUS'
+      Origin = 'STATUS'
+      Required = True
+      Size = 15
+    end
+    object FMTBCDField1: TFMTBCDField
+      DisplayLabel = 'Vlr. Total'
+      DisplayWidth = 10
+      FieldName = 'VALOR_TOTAL'
+      Origin = 'VALOR_TOTAL'
+      DisplayFormat = '#,##0.00'
+      Precision = 18
+      Size = 2
+    end
+    object IntegerField3: TIntegerField
+      DisplayLabel = 'Em Atraso'
+      DisplayWidth = 5
+      FieldName = 'EM_ATRASO'
+      Origin = 'EM_ATRASO'
+      Visible = False
+    end
+  end
+  object qryRelItens: TFDQuery
+    MasterSource = dsRelOS
+    MasterFields = 'ID'
+    DetailFields = 'ORDEM_ID'
+    SQL.Strings = (
+      'SELECT'
+      '  ID,'
+      '  ORDEM_ID,'
+      '  DESCRICAO,'
+      '  QUANTIDADE,'
+      '  VALOR_UNITARIO'
+      'FROM ITEM_ORDEM'
+      'WHERE ORDEM_ID = :ID')
+    Left = 240
+    Top = 112
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftInteger
+        ParamType = ptInput
+      end>
+    object IntegerField4: TIntegerField
+      DisplayLabel = 'OS'
+      DisplayWidth = 5
+      FieldName = 'ORDEM_ID'
+      Origin = 'ORDEM_ID'
+      Required = True
+      Visible = False
+    end
+    object IntegerField5: TIntegerField
+      DisplayLabel = 'Id'
+      DisplayWidth = 5
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Visible = False
+    end
+    object WideStringField3: TWideStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      DisplayWidth = 70
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      Required = True
+      Size = 200
+    end
+    object FMTBCDField2: TFMTBCDField
+      DisplayLabel = 'Quantidade'
+      DisplayWidth = 10
+      FieldName = 'QUANTIDADE'
+      Origin = 'QUANTIDADE'
+      Required = True
+      DisplayFormat = '#,##0.00'
+      Precision = 18
+      Size = 2
+    end
+    object FMTBCDField3: TFMTBCDField
+      DisplayLabel = 'Vlr. Unit'#225'rio'
+      DisplayWidth = 10
+      FieldName = 'VALOR_UNITARIO'
+      Origin = 'VALOR_UNITARIO'
+      Required = True
+      DisplayFormat = '#,##0.00'
+      Precision = 18
+      Size = 2
+    end
+  end
+  object dsRelOS: TDataSource
+    DataSet = qryRelOS
+    Left = 312
+    Top = 24
+  end
+  object dsRelItens: TDataSource
+    DataSet = qryRelItens
+    Left = 312
     Top = 112
   end
 end

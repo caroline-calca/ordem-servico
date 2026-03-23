@@ -66,6 +66,7 @@ object fListaOrdemServico: TfListaOrdemServico
       ParentShowHint = False
       ShowHint = False
       TabOrder = 0
+      OnClick = btnImprimirClick
     end
   end
   object pnlOS: TPanel

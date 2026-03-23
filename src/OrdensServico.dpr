@@ -32,6 +32,7 @@ uses
   untOrdemServicoServiceFactory in 'services\factories\untOrdemServicoServiceFactory.pas',
   frmListaOrdemServico in 'views\frmListaOrdemServico.pas' {fListaOrdemServico},
   frmCadOrdemServico in 'views\frmCadOrdemServico.pas' {fOrdemServico},
+  frmRelOrdemServico in 'views\reports\frmRelOrdemServico.pas' {fRelOrdemServico},
   uDMOrdemServico in 'infra\db\datamodules\uDMOrdemServico.pas' {DMOrdemServico: TDataModule};
 
 {$R *.res}
@@ -47,7 +48,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDMBase, DMBase);
   Application.CreateForm(TDMCliente, DMCliente);
-  Application.CreateForm(TDMOrdemServico, DMOrdemServico);
   Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TDMOrdemServico, DMOrdemServico);
   Application.Run;
 end.

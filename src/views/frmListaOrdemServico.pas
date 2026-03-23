@@ -26,7 +26,8 @@ uses
   untOrdemServico,
   untOrdemServicoServiceFactory,
   untOrdemServicoFiltro,
-  frmCadOrdemServico;
+  frmCadOrdemServico,
+  frmRelOrdemServico;
 
 type
   TfListaOrdemServico = class(TForm)
@@ -91,10 +92,12 @@ type
     procedure edtVlrTotalInicialKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure dbgOSDblClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
   private
     function ObterStatusSelecionados: TArray<TStatusOS>;
     function MontarFiltro: TOrdemServicoFiltro;
     procedure Listar;
+    procedure ListarRelatorio;
   public
     { Public declarations }
   end;
@@ -135,6 +138,21 @@ begin
   except
     on E: Exception do
       ShowMsg('Erro ao excluir a ordem de serviço: ' +sLineBreak+ E.Message, mtErr);
+  end;
+end;
+
+procedure TfListaOrdemServico.btnImprimirClick(Sender: TObject);
+var
+  frmRelOS: TfRelOrdemServico;
+begin
+  ListarRelatorio;
+
+  frmRelOS := TfRelOrdemServico.Create(nil);
+  try
+   // RLDataSource1.DataSet := qryOS;
+    frmRelOS.rlRelOrdemServico.Preview;
+  finally
+    frmRelOS.Free;
   end;
 end;
 
@@ -276,6 +294,18 @@ begin
   Filtro := MontarFiltro;
   try
     DMOrdemServico.Listar(Filtro);
+  finally
+    Filtro.Free;
+  end;
+end;
+
+procedure TfListaOrdemServico.ListarRelatorio;
+var
+  Filtro: TOrdemServicoFiltro;
+begin
+  Filtro := MontarFiltro;
+  try
+    DMOrdemServico.ListarRelatorio(Filtro);
   finally
     Filtro.Free;
   end;

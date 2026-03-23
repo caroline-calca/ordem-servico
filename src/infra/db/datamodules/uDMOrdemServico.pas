@@ -13,7 +13,8 @@ uses
   FireDAC.Phys.Intf,
   FireDAC.DApt.Intf,
   FireDAC.Stan.Async,
-  FireDAC.DApt, Data.DB,
+  FireDAC.DApt,
+  Data.DB,
   FireDAC.Comp.DataSet,
   FireDAC.Comp.Client,
 
@@ -41,14 +42,36 @@ type
     qryItensVALOR_UNITARIO: TFMTBCDField;
     dsOS: TDataSource;
     dsItens: TDataSource;
+    qryRelOS: TFDQuery;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    WideStringField1: TWideStringField;
+    DateField1: TDateField;
+    DateField2: TDateField;
+    DateField3: TDateField;
+    WideStringField2: TWideStringField;
+    FMTBCDField1: TFMTBCDField;
+    IntegerField3: TIntegerField;
+    qryRelItens: TFDQuery;
+    IntegerField4: TIntegerField;
+    IntegerField5: TIntegerField;
+    WideStringField3: TWideStringField;
+    FMTBCDField2: TFMTBCDField;
+    FMTBCDField3: TFMTBCDField;
+    dsRelOS: TDataSource;
+    dsRelItens: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure qryOSAfterOpen(DataSet: TDataSet);
     procedure qryOSAfterRefresh(DataSet: TDataSet);
     procedure qryOSAfterScroll(DataSet: TDataSet);
+    procedure qryRelOSAfterOpen(DataSet: TDataSet);
+    procedure qryRelOSAfterRefresh(DataSet: TDataSet);
+    procedure qryRelOSAfterScroll(DataSet: TDataSet);
   private
-    { Private declarations }
+    procedure Listar(const AFiltro: TOrdemServicoFiltro; AQry: TFDQuery; AOrdem: String = ''); overload;
   public
-    procedure Listar(const AFiltro: TOrdemServicoFiltro);
+    procedure Listar(const AFiltro: TOrdemServicoFiltro); overload;
+    procedure ListarRelatorio(const AFiltro: TOrdemServicoFiltro);
   end;
 
 var
@@ -65,130 +88,9 @@ begin
 
   qryOS.Connection := Connection;
   qryItens.Connection := Connection;
-end;
 
-procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro);
-var
-  i: Integer;
-  Params: string;
-begin
-  qryOS.Close;
-  qryOS.SQL.Clear;
-
-  qryOS.SQL.Add('SELECT');
-  qryOS.SQL.Add('  ID,');
-  qryOS.SQL.Add('  CLIENTE_ID,');
-  qryOS.SQL.Add('  CLIENTE_NOME,');
-  qryOS.SQL.Add('  DATA_ABERTURA,');
-  qryOS.SQL.Add('  DATA_PREVISTA,');
-  qryOS.SQL.Add('  DATA_FECHAMENTO,');
-  qryOS.SQL.Add('  STATUS,');
-  qryOS.SQL.Add('  VALOR_TOTAL,');
-  qryOS.SQL.Add('  EM_ATRASO');
-  qryOS.SQL.Add('FROM VW_OS_RESUMO');
-  qryOS.SQL.Add('WHERE 1=1');
-
-  if Assigned(AFiltro) then
-  begin
-    // ID OS
-    if AFiltro.TemIDInicial then
-    begin
-      qryOS.SQL.Add('AND ID >= :ID_INICIAL');
-      qryOS.ParamByName('ID_INICIAL').AsInteger := AFiltro.IDInicial;
-    end;
-
-    if AFiltro.TemIDFinal then
-    begin
-      qryOS.SQL.Add('AND ID <= :ID_FINAL');
-      qryOS.ParamByName('ID_FINAL').AsInteger := AFiltro.IDFinal;
-    end;
-
-    // Data Abertura
-    if AFiltro.TemDataAberturaInicial then
-    begin
-      qryOS.SQL.Add('AND DATA_ABERTURA >= :DATA_ABERTURA_INICIAL');
-      qryOS.ParamByName('DATA_ABERTURA_INICIAL').AsDate := AFiltro.DataAberturaInicial;
-    end;
-
-    if AFiltro.TemDataAberturaFinal then
-    begin
-      qryOS.SQL.Add('AND DATA_ABERTURA <= :DATA_ABERTURA_FINAL');
-      qryOS.ParamByName('DATA_ABERTURA_FINAL').AsDate := AFiltro.DataAberturaFinal;
-    end;
-
-    // Data Prevista
-    if AFiltro.TemDataPrevistaInicial then
-    begin
-      qryOS.SQL.Add('AND DATA_PREVISTA >= :DATA_PREVISTA_INICIAL');
-      qryOS.ParamByName('DATA_PREVISTA_INICIAL').AsDate := AFiltro.DataPrevistaInicial;
-    end;
-
-    if AFiltro.TemDataPrevistaFinal then
-    begin
-      qryOS.SQL.Add('AND DATA_PREVISTA <= :DATA_PREVISTA_FINAL');
-      qryOS.ParamByName('DATA_PREVISTA_FINAL').AsDate := AFiltro.DataPrevistaFinal;
-    end;
-
-    // Data Fechamento
-    if AFiltro.TemDataFechamentoInicial then
-    begin
-      qryOS.SQL.Add('AND DATA_FECHAMENTO >= :DATA_FECHAMENTO_INICIAL');
-      qryOS.ParamByName('DATA_FECHAMENTO_INICIAL').AsDate := AFiltro.DataFechamentoInicial;
-    end;
-
-    if AFiltro.TemDataFechamentoFinal then
-    begin
-      qryOS.SQL.Add('AND DATA_FECHAMENTO <= :DATA_FECHAMENTO_FINAL');
-      qryOS.ParamByName('DATA_FECHAMENTO_FINAL').AsDate := AFiltro.DataFechamentoFinal;
-    end;
-
-    // Cliente
-    if AFiltro.TemCliente then
-    begin
-      qryOS.SQL.Add('AND UPPER(CLIENTE_NOME) LIKE :CLIENTE');
-      qryOS.ParamByName('CLIENTE').AsString :=
-        '%' + UpperCase(AFiltro.ClienteNome) + '%';
-    end;
-
-    // Valor Total
-    if AFiltro.TemValorMin then
-    begin
-      qryOS.SQL.Add('AND VALOR_TOTAL >= :VALOR_MIN');
-      qryOS.ParamByName('VALOR_MIN').AsFloat := AFiltro.ValorMin;
-    end;
-
-    if AFiltro.TemValorMax then
-    begin
-      qryOS.SQL.Add('AND VALOR_TOTAL <= :VALOR_MAX');
-      qryOS.ParamByName('VALOR_MAX').AsFloat := AFiltro.ValorMax;
-    end;
-
-    // Status
-    if AFiltro.TemStatus then
-    begin
-      Params := '';
-
-      for i := 0 to High(AFiltro.Status) do
-      begin
-        if i > 0 then
-          Params := Params + ',';
-
-        Params := Params + ':STATUS' + i.ToString;
-      end;
-
-      qryOS.SQL.Add('AND STATUS IN (' + Params + ')');
-
-      for i := 0 to High(AFiltro.Status) do
-      begin
-        qryOS.ParamByName('STATUS' + i.ToString).AsString :=
-          TStatusOSUtils.ToString(AFiltro.Status[i]);
-      end;
-    end;
-  end;
-
-  qryOS.SQL.Add('ORDER BY ID DESC');
-
-  qryOS.Open;
+  qryRelOS.Connection := Connection;
+  qryRelItens.Connection := Connection;
 end;
 
 procedure TDMOrdemServico.qryOSAfterOpen(DataSet: TDataSet);
@@ -204,6 +106,158 @@ end;
 procedure TDMOrdemServico.qryOSAfterScroll(DataSet: TDataSet);
 begin
   qryItens.Open;
+end;
+
+procedure TDMOrdemServico.qryRelOSAfterOpen(DataSet: TDataSet);
+begin
+  qryRelItens.Open;
+end;
+
+procedure TDMOrdemServico.qryRelOSAfterRefresh(DataSet: TDataSet);
+begin
+  qryRelItens.Open;
+end;
+
+procedure TDMOrdemServico.qryRelOSAfterScroll(DataSet: TDataSet);
+begin
+  qryRelItens.Open;
+end;
+
+procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro);
+begin
+  Listar(AFiltro, qryOS);
+end;
+
+procedure TDMOrdemServico.ListarRelatorio(const AFiltro: TOrdemServicoFiltro);
+begin
+  Listar(AFiltro, qryRelOS, 'STATUS');
+end;
+
+procedure TDMOrdemServico.Listar(const AFiltro: TOrdemServicoFiltro; AQry: TFDQuery; AOrdem: String = '');
+var
+  i: Integer;
+  Params: string;
+begin
+  if AOrdem = '' then
+    AOrdem := 'ID DESC';
+
+  AQry.Close;
+  AQry.SQL.Clear;
+
+  AQry.SQL.Add('SELECT');
+  AQry.SQL.Add('  ID,');
+  AQry.SQL.Add('  CLIENTE_ID,');
+  AQry.SQL.Add('  CLIENTE_NOME,');
+  AQry.SQL.Add('  DATA_ABERTURA,');
+  AQry.SQL.Add('  DATA_PREVISTA,');
+  AQry.SQL.Add('  DATA_FECHAMENTO,');
+  AQry.SQL.Add('  STATUS,');
+  AQry.SQL.Add('  VALOR_TOTAL,');
+  AQry.SQL.Add('  EM_ATRASO');
+  AQry.SQL.Add('FROM VW_OS_RESUMO');
+  AQry.SQL.Add('WHERE 1=1');
+
+  if Assigned(AFiltro) then
+  begin
+    // ID OS
+    if AFiltro.TemIDInicial then
+    begin
+      AQry.SQL.Add('AND ID >= :ID_INICIAL');
+      AQry.ParamByName('ID_INICIAL').AsInteger := AFiltro.IDInicial;
+    end;
+
+    if AFiltro.TemIDFinal then
+    begin
+      AQry.SQL.Add('AND ID <= :ID_FINAL');
+      AQry.ParamByName('ID_FINAL').AsInteger := AFiltro.IDFinal;
+    end;
+
+    // Data Abertura
+    if AFiltro.TemDataAberturaInicial then
+    begin
+      AQry.SQL.Add('AND DATA_ABERTURA >= :DATA_ABERTURA_INICIAL');
+      AQry.ParamByName('DATA_ABERTURA_INICIAL').AsDate := AFiltro.DataAberturaInicial;
+    end;
+
+    if AFiltro.TemDataAberturaFinal then
+    begin
+      AQry.SQL.Add('AND DATA_ABERTURA <= :DATA_ABERTURA_FINAL');
+      AQry.ParamByName('DATA_ABERTURA_FINAL').AsDate := AFiltro.DataAberturaFinal;
+    end;
+
+    // Data Prevista
+    if AFiltro.TemDataPrevistaInicial then
+    begin
+      AQry.SQL.Add('AND DATA_PREVISTA >= :DATA_PREVISTA_INICIAL');
+      AQry.ParamByName('DATA_PREVISTA_INICIAL').AsDate := AFiltro.DataPrevistaInicial;
+    end;
+
+    if AFiltro.TemDataPrevistaFinal then
+    begin
+      AQry.SQL.Add('AND DATA_PREVISTA <= :DATA_PREVISTA_FINAL');
+      AQry.ParamByName('DATA_PREVISTA_FINAL').AsDate := AFiltro.DataPrevistaFinal;
+    end;
+
+    // Data Fechamento
+    if AFiltro.TemDataFechamentoInicial then
+    begin
+      AQry.SQL.Add('AND DATA_FECHAMENTO >= :DATA_FECHAMENTO_INICIAL');
+      AQry.ParamByName('DATA_FECHAMENTO_INICIAL').AsDate := AFiltro.DataFechamentoInicial;
+    end;
+
+    if AFiltro.TemDataFechamentoFinal then
+    begin
+      AQry.SQL.Add('AND DATA_FECHAMENTO <= :DATA_FECHAMENTO_FINAL');
+      AQry.ParamByName('DATA_FECHAMENTO_FINAL').AsDate := AFiltro.DataFechamentoFinal;
+    end;
+
+    // Cliente
+    if AFiltro.TemCliente then
+    begin
+      AQry.SQL.Add('AND UPPER(CLIENTE_NOME) LIKE :CLIENTE');
+      AQry.ParamByName('CLIENTE').AsString :=
+        '%' + UpperCase(AFiltro.ClienteNome) + '%';
+    end;
+
+    // Valor Total
+    if AFiltro.TemValorMin then
+    begin
+      AQry.SQL.Add('AND VALOR_TOTAL >= :VALOR_MIN');
+      AQry.ParamByName('VALOR_MIN').AsFloat := AFiltro.ValorMin;
+    end;
+
+    if AFiltro.TemValorMax then
+    begin
+      AQry.SQL.Add('AND VALOR_TOTAL <= :VALOR_MAX');
+      AQry.ParamByName('VALOR_MAX').AsFloat := AFiltro.ValorMax;
+    end;
+
+    // Status
+    if AFiltro.TemStatus then
+    begin
+      Params := '';
+
+      for i := 0 to High(AFiltro.Status) do
+      begin
+        if i > 0 then
+          Params := Params + ',';
+
+        Params := Params + ':STATUS' + i.ToString;
+      end;
+
+      AQry.SQL.Add('AND STATUS IN (' + Params + ')');
+
+      for i := 0 to High(AFiltro.Status) do
+      begin
+        AQry.ParamByName('STATUS' + i.ToString).AsString :=
+          TStatusOSUtils.ToString(AFiltro.Status[i]);
+      end;
+    end;
+  end;
+
+  AQry.SQL.Add('ORDER BY ' + AOrdem);
+
+  AQry.Open;
 end;
 
 end.
