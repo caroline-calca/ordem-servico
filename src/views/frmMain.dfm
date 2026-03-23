@@ -38,6 +38,7 @@ object fMain: TfMain
       end
       object mnOrdensServico: TMenuItem
         Caption = 'Ordens de Servi'#231'o'
+        OnClick = mnOrdensServicoClick
       end
     end
     object Sistema1: TMenuItem

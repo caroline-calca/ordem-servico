@@ -24,7 +24,7 @@ uses
   untClienteServiceFactory,
   untClienteFiltro,
 
-  frmCliente;
+  frmCadCliente;
 
 type
   TfListaClientes = class(TForm)
@@ -50,6 +50,7 @@ type
     procedure dbgClientesKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure dbgClientesDblClick(Sender: TObject);
   private
     procedure Listar;
   public
@@ -106,11 +107,15 @@ begin
   Listar;
 end;
 
+procedure TfListaClientes.dbgClientesDblClick(Sender: TObject);
+begin
+  btnEditarClick(Sender);
+end;
+
 procedure TfListaClientes.dbgClientesKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   case Key of
     vk_return: btnEditarClick(Sender);
-    vk_delete: btnExcluirClick(Sender);
   end;
 end;
 
@@ -119,8 +124,13 @@ begin
   case Key of
     vk_insert: btnNovoClick(Sender);
     vk_f2: btnEditarClick(Sender);
-    vk_delete: btnExcluirClick(Sender);
     vk_escape: Close;
+
+    vk_delete:
+    begin
+      if not (ActiveControl is TEdit) then
+        btnExcluirClick(Sender);
+    end;
 
     vk_up: dbgClientes.Datasource.Dataset.Prior;
     vk_down: dbgClientes.Datasource.Dataset.Next;

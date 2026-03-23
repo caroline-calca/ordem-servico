@@ -1,4 +1,4 @@
-unit frmCliente;
+unit frmCadCliente;
 
 interface
 

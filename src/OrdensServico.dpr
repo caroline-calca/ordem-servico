@@ -16,12 +16,23 @@ uses
   untClienteRepositoryFirebird in 'repositories\untClienteRepositoryFirebird.pas',
   untClienteServiceImpl in 'services\untClienteServiceImpl.pas',
   frmListaClientes in 'views\frmListaClientes.pas' {fListaClientes},
-  frmCliente in 'views\frmCliente.pas' {fCliente},
+  frmCadCliente in 'views\frmCadCliente.pas' {fCliente},
   untClienteService in 'services\interfaces\untClienteService.pas',
   untCliente in 'domain\entities\untCliente.pas',
   untClienteFiltro in 'domain\filters\untClienteFiltro.pas',
   untClienteServiceFactory in 'services\factories\untClienteServiceFactory.pas',
-  uDMCliente in 'infra\db\datamodules\uDMCliente.pas' {DMCliente: TDataModule};
+  uDMCliente in 'infra\db\datamodules\uDMCliente.pas' {DMCliente: TDataModule},
+  untOrdemServico in 'domain\entities\untOrdemServico.pas',
+  untOrdemServicoItem in 'domain\entities\untOrdemServicoItem.pas',
+  untOrdemServicoFiltro in 'domain\filters\untOrdemServicoFiltro.pas',
+  untOrdemServicoRepository in 'repositories\interfaces\untOrdemServicoRepository.pas',
+  untOrdemServicoRepositoryFirebird in 'repositories\untOrdemServicoRepositoryFirebird.pas',
+  untOrdemServicoService in 'services\interfaces\untOrdemServicoService.pas',
+  untOrdemServicoServiceImpl in 'services\untOrdemServicoServiceImpl.pas',
+  untOrdemServicoServiceFactory in 'services\factories\untOrdemServicoServiceFactory.pas',
+  frmListaOrdemServico in 'views\frmListaOrdemServico.pas' {fListaOrdemServico},
+  frmCadOrdemServico in 'views\frmCadOrdemServico.pas' {fOrdemServico},
+  uDMOrdemServico in 'infra\db\datamodules\uDMOrdemServico.pas' {DMOrdemServico: TDataModule};
 
 {$R *.res}
 
@@ -34,8 +45,7 @@ begin
     Exit;
 
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TDMBase, DMBase);
-  Application.CreateForm(TDMCliente, DMCliente);
   Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TDMOrdemServico, DMOrdemServico);
   Application.Run;
 end.

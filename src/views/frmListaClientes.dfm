@@ -102,6 +102,7 @@ object fListaClientes: TfListaClientes
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnDblClick = dbgClientesDblClick
       OnKeyDown = dbgClientesKeyDown
     end
   end

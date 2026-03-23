@@ -17,7 +17,8 @@ uses
 
   untUtils,
   frmConfig,
-  frmListaClientes;
+  frmListaClientes,
+  frmListaOrdemServico;
 
 type
   TfMain = class(TForm)
@@ -35,6 +36,7 @@ type
     procedure mnClientesClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure mnSobreClick(Sender: TObject);
+    procedure mnOrdensServicoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -78,6 +80,14 @@ begin
 
     Application.Terminate;
   end;
+end;
+
+procedure TfMain.mnOrdensServicoClick(Sender: TObject);
+begin
+  if not Assigned(fListaOrdemServico) then
+    fListaOrdemServico := TfListaOrdemServico.Create(Self);
+
+  fListaOrdemServico.Show;
 end;
 
 procedure TfMain.mnSobreClick(Sender: TObject);

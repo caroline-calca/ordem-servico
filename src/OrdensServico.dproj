@@ -155,7 +155,7 @@
             <Form>fListaClientes</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="views\frmCliente.pas">
+        <DCCReference Include="views\frmCadCliente.pas">
             <Form>fCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
@@ -165,6 +165,27 @@
         <DCCReference Include="services\factories\untClienteServiceFactory.pas"/>
         <DCCReference Include="infra\db\datamodules\uDMCliente.pas">
             <Form>DMCliente</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="domain\entities\untOrdemServico.pas"/>
+        <DCCReference Include="domain\entities\untOrdemServicoItem.pas"/>
+        <DCCReference Include="domain\filters\untOrdemServicoFiltro.pas"/>
+        <DCCReference Include="repositories\interfaces\untOrdemServicoRepository.pas"/>
+        <DCCReference Include="repositories\untOrdemServicoRepositoryFirebird.pas"/>
+        <DCCReference Include="services\interfaces\untOrdemServicoService.pas"/>
+        <DCCReference Include="services\untOrdemServicoServiceImpl.pas"/>
+        <DCCReference Include="services\factories\untOrdemServicoServiceFactory.pas"/>
+        <DCCReference Include="views\frmListaOrdemServico.pas">
+            <Form>fListaOrdemServico</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="views\frmCadOrdemServico.pas">
+            <Form>fOrdemServico</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="infra\db\datamodules\uDMOrdemServico.pas">
+            <Form>DMOrdemServico</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
