@@ -4,9 +4,12 @@ interface
 
 uses
   System.SysUtils,
+  System.Generics.Collections,
+
   untCliente,
   untClienteRepository,
-  untClienteService;
+  untClienteService,
+  untClienteFiltro;
 
 type
   TClienteService = class(TInterfacedObject, IClienteService)
@@ -17,6 +20,7 @@ type
 
     procedure Salvar(ACliente: TCliente);
     procedure Excluir(AID: Integer);
+
     function ObterPorID(AID: Integer): TCliente;
   end;
 

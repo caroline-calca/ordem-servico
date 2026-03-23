@@ -5,20 +5,21 @@ interface
 uses
   System.SysUtils,
   System.Classes,
-  FireDAC.Stan.Intf,
-  FireDAC.Stan.Option,
+  FireDAC.Stan.Intf, 
+  FireDAC.Stan.Option, 
   FireDAC.Stan.Param,
-  FireDAC.Stan.Error,
-  FireDAC.DatS,
-  FireDAC.Phys.Intf,
+  FireDAC.Stan.Error, 
+  FireDAC.DatS, 
+  FireDAC.Phys.Intf, 
   FireDAC.DApt.Intf,
-  FireDAC.Stan.Async,
-  FireDAC.DApt,
-  Data.DB,
+  FireDAC.Stan.Async, 
+  FireDAC.DApt, 
+  Data.DB, 
   FireDAC.Comp.DataSet,
   FireDAC.Comp.Client,
-
-  uDMBase;
+  
+  uDMBase,
+  untClienteFiltro;
 
 type
   TDMCliente = class(TDMBase)
@@ -34,7 +35,7 @@ type
   private
     { Private declarations }
   public
-    procedure Listar(const AFiltro: string = '');
+    procedure Listar(const AFiltro: TClienteFiltro);
   end;
 
 var
@@ -42,11 +43,7 @@ var
 
 implementation
 
-{%CLASSGROUP 'Vcl.Controls.TControl'}
-
 {$R *.dfm}
-
-{ TDMCliente }
 
 procedure TDMCliente.DataModuleCreate(Sender: TObject);
 begin
@@ -56,7 +53,7 @@ begin
   qryClientes.Connection := Connection;
 end;
 
-procedure TDMCliente.Listar(const AFiltro: string);
+procedure TDMCliente.Listar(const AFiltro: TClienteFiltro);
 begin
   qryClientes.Close;
   qryClientes.SQL.Clear;
@@ -69,11 +66,13 @@ begin
   qryClientes.SQL.Add('  TELEFONE,');
   qryClientes.SQL.Add('  DATA_CADASTRO');
   qryClientes.SQL.Add('FROM CLIENTE');
+  qryClientes.SQL.Add('WHERE 1=1');
 
-  if Trim(AFiltro) <> '' then
+  if Assigned(AFiltro) and AFiltro.TemNome then
   begin
-    qryClientes.SQL.Add('WHERE UPPER(NOME) LIKE :NOME');
-    qryClientes.ParamByName('NOME').AsString := '%' + UpperCase(AFiltro) + '%';
+    qryClientes.SQL.Add('AND UPPER(NOME) LIKE :NOME');
+    qryClientes.ParamByName('NOME').AsString :=
+      '%' + UpperCase(AFiltro.Nome) + '%';
   end;
 
   qryClientes.SQL.Add('ORDER BY NOME');

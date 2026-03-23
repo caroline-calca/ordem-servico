@@ -3,7 +3,9 @@ unit untClienteRepository;
 interface
 
 uses
-  untCliente;
+  System.Generics.Collections,
+  untCliente,
+  untClienteFiltro;
 
 type
   IClienteRepository = interface
@@ -12,8 +14,9 @@ type
     procedure Inserir(ACliente: TCliente);
     procedure Atualizar(ACliente: TCliente);
     procedure Excluir(AID: Integer);
+
     function ObterPorID(AID: Integer): TCliente;
-    function PossuiOrdemServico(const AClienteID: Integer): Boolean;
+    function PossuiOrdemServico(const AID: Integer): Boolean;
   end;
 
 implementation

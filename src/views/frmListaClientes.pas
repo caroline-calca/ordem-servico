@@ -21,10 +21,8 @@ uses
 
   untUtils,
   uDMCliente,
- // untClienteRepository,
-  untClienteRepositoryFirebird,
-  untClienteService,
-  untClienteServiceImpl,
+  untClienteServiceFactory,
+  untClienteFiltro,
 
   frmCliente;
 
@@ -53,7 +51,7 @@ type
       Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
-    { Private declarations }
+    procedure Listar;
   public
     { Public declarations }
   end;
@@ -65,22 +63,7 @@ implementation
 
 {$R *.dfm}
 
-procedure TfListaClientes.btnEditarClick(Sender: TObject);
-begin
-  if DMCliente.qryClientes.IsEmpty then
-  begin
-    ShowMsg('Selecione um cliente para edição.', mtWarn);
-    Exit;
-  end;
-
-  if TfCliente.Editar(DMCliente.qryClientesID.AsInteger) then
-    DMCliente.Listar;
-end;
-
 procedure TfListaClientes.btnExcluirClick(Sender: TObject);
-var
-  ID: Integer;
-  Service: IClienteService;
 begin
   if DMCliente.qryClientes.IsEmpty then
   begin
@@ -88,15 +71,12 @@ begin
     Exit;
   end;
 
-  ID := DMCliente.qryClientesID.AsInteger;
-
   if (ShowMsg('Deseja realmente excluir esse cliente?', mtQuest) <> mrYes) then
     Exit;
 
-  Service := TClienteService.Create(TClienteRepositoryFirebird.Create);
   try
-    Service.Excluir(ID);
-    DMCliente.Listar;
+    ClienteService.Excluir(DMCliente.qryClientesID.AsInteger);
+    Listar;
   except
     on E: Exception do
       ShowMsg('Erro ao excluir o cliente: ' +#13#10+ E.Message, mtErr);
@@ -106,19 +86,29 @@ end;
 procedure TfListaClientes.btnNovoClick(Sender: TObject);
 begin
   if TfCliente.Novo then
-    DMCliente.Listar;
+    Listar;
+end;
+
+procedure TfListaClientes.btnEditarClick(Sender: TObject);
+begin
+  if DMCliente.qryClientes.IsEmpty then
+  begin
+    ShowMsg('Selecione um cliente para edição.', mtWarn);
+    Exit;
+  end;
+
+  if TfCliente.Editar(DMCliente.qryClientesID.AsInteger) then
+    Listar;
 end;
 
 procedure TfListaClientes.btnPesquisarClick(Sender: TObject);
 begin
-  DMCliente.Listar(edtNome.Text);
+  Listar;
 end;
 
 procedure TfListaClientes.dbgClientesKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   case Key of
-    vk_up: dbgClientes.Datasource.Dataset.Prior;
-    vk_down: dbgClientes.Datasource.Dataset.Next;
     vk_return: btnEditarClick(Sender);
     vk_delete: btnExcluirClick(Sender);
   end;
@@ -131,6 +121,9 @@ begin
     vk_f2: btnEditarClick(Sender);
     vk_delete: btnExcluirClick(Sender);
     vk_escape: Close;
+
+    vk_up: dbgClientes.Datasource.Dataset.Prior;
+    vk_down: dbgClientes.Datasource.Dataset.Next;
   end;
 end;
 
@@ -149,7 +142,12 @@ end;
 
 procedure TfListaClientes.FormCreate(Sender: TObject);
 begin
-  DMCliente.Listar;
+  Listar;
+end;
+
+procedure TfListaClientes.Listar;
+begin
+  DMCliente.Listar(TClienteFiltro.PorNome(edtNome.Text));
 end;
 
 end.

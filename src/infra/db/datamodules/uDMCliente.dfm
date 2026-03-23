@@ -1,7 +1,7 @@
 object DMCliente: TDMCliente
   OnCreate = DataModuleCreate
-  Height = 194
-  Width = 285
+  Height = 226
+  Width = 307
   object qryClientes: TFDQuery
     SQL.Strings = (
       'SELECT ID, NOME, DOCUMENTO, EMAIL, TELEFONE, DATA_CADASTRO'

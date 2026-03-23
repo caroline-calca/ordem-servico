@@ -4,11 +4,15 @@ interface
 
 uses
   System.SysUtils,
+  System.Generics.Collections,
   FireDAC.Comp.Client,
+  FireDAC.Stan.Param,
   Data.DB,
+
+  untConnectionManager,
   untClienteRepository,
   untCliente,
-  untConnectionManager;
+  untClienteFiltro;
 
 type
   TClienteRepositoryFirebird = class(TInterfacedObject, IClienteRepository)
@@ -20,6 +24,7 @@ type
     procedure Inserir(ACliente: TCliente);
     procedure Atualizar(ACliente: TCliente);
     procedure Excluir(AID: Integer);
+
     function ObterPorID(AID: Integer): TCliente;
     function PossuiOrdemServico(const AID: Integer): Boolean;
   end;

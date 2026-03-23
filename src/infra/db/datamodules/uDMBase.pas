@@ -29,8 +29,6 @@ var
 
 implementation
 
-{%CLASSGROUP 'Vcl.Controls.TControl'}
-
 {$R *.dfm}
 
 { TdmBase }

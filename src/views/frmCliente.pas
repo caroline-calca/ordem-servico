@@ -17,10 +17,7 @@ uses
 
   untUtils,
   untCliente,
- // untClienteRepository,
-  untClienteRepositoryFirebird,
-  untClienteService,
-  untClienteServiceImpl;
+  untClienteServiceFactory;
 
 type
   TfCliente = class(TForm)
@@ -115,12 +112,9 @@ end;
 
 procedure TfCliente.CarregarDados(AID: Integer);
 var
-  Service: IClienteService;
   Cliente: TCliente;
 begin
-  Service := TClienteService.Create(TClienteRepositoryFirebird.Create);
-
-  Cliente := Service.ObterPorID(AID);
+  Cliente := ClienteService.ObterPorID(AID);
   try
     if not Assigned(Cliente) then
       raise Exception.Create('Cliente não encontrado.');
@@ -136,11 +130,8 @@ end;
 
 procedure TfCliente.Salvar;
 var
-  Service: IClienteService;
   Cliente: TCliente;
 begin
-  Service := TClienteService.Create(TClienteRepositoryFirebird.Create);
-
   Cliente := TCliente.Create;
   try
     Cliente.ID := FClienteID;
@@ -149,7 +140,7 @@ begin
     Cliente.Email := edtEmail.Text;
     Cliente.Telefone := edtTelefone.Text;
 
-    Service.Salvar(Cliente);
+    ClienteService.Salvar(Cliente);
   finally
     Cliente.Free;
   end;

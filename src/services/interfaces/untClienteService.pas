@@ -3,7 +3,9 @@ unit untClienteService;
 interface
 
 uses
-  untCliente;
+  System.Generics.Collections,
+  untCliente,
+  untClienteFiltro;
 
 type
   IClienteService = interface
@@ -11,6 +13,7 @@ type
 
     procedure Salvar(ACliente: TCliente);
     procedure Excluir(AID: Integer);
+
     function ObterPorID(AID: Integer): TCliente;
   end;
 
