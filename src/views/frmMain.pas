@@ -33,6 +33,8 @@ type
     mnSobre: TMenuItem;
     procedure mnConfiguracoesClick(Sender: TObject);
     procedure mnClientesClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure mnSobreClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,6 +47,19 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfMain.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    vk_escape:
+    begin
+      if (ShowMsg('Deseja realmente sair do sistema?', mtQuest) <> mrYes) then
+        Exit;
+
+      Application.Terminate;
+    end;
+  end;
+end;
 
 procedure TfMain.mnClientesClick(Sender: TObject);
 begin
@@ -63,6 +78,39 @@ begin
 
     Application.Terminate;
   end;
+end;
+
+procedure TfMain.mnSobreClick(Sender: TObject);
+const TempoTotalDev = '20 horas';
+begin
+  ShowMsg('Sistema de Ordens de Serviço' + sLineBreak +
+          'Versão: 1.0' + sLineBreak +
+          sLineBreak +
+          'Desenvolvido como prova técnica para vaga de Desenvolvedor Delphi.' + sLineBreak +
+          sLineBreak +
+          'Tecnologias utilizadas:' + sLineBreak +
+          '- Delphi (VCL)' + sLineBreak +
+          '- FireDAC' + sLineBreak +
+          '- Fast Report' + sLineBreak +
+          '- Banco de dados Firebird' + sLineBreak +
+          sLineBreak +
+          'Funcionalidades:' + sLineBreak +
+          '- Cadastro de clientes' + sLineBreak +
+          '- Cadastro de ordens de serviço e itens' + sLineBreak +
+          '- Filtros dinâmicos' + sLineBreak +
+          '- Relatório de ordens de serviço' + sLineBreak +
+          '- Tela de configurações' + sLineBreak +
+          '- Criação automatizada de banco de dados' + sLineBreak +
+          sLineBreak +
+          'Arquitetura:' + sLineBreak +
+          '- Separação em camadas (Repository, Service, UI)' + sLineBreak +
+          '- Uso de filtros tipados para escalabilidade' + sLineBreak +
+          '- Aplicação de princípios SOLID e Clean Code' + sLineBreak +
+          sLineBreak +
+          'Tempo total de desenvolvimento: ' + TempoTotalDev + sLineBreak +
+          sLineBreak +
+          'Autor: Caroline Calça' + sLineBreak +
+          'Ano: 2026', mtInfo);
 end;
 
 end.

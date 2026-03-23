@@ -10,9 +10,11 @@ object fMain: TfMain
   Font.Height = -12
   Font.Name = 'Calibri Light'
   Font.Style = []
+  KeyPreview = True
   Menu = mmMain
   Position = poScreenCenter
   WindowState = wsMaximized
+  OnKeyDown = FormKeyDown
   TextHeight = 14
   object pnlMain: TPanel
     Left = 0
@@ -49,6 +51,7 @@ object fMain: TfMain
       end
       object mnSobre: TMenuItem
         Caption = 'Sobre'
+        OnClick = mnSobreClick
       end
     end
   end
