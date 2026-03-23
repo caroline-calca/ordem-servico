@@ -29,11 +29,12 @@ object fListaOrdemServico: TfListaOrdemServico
   end
   object pnlTopo: TPanel
     Left = 0
-    Top = 0
+    Top = 19
     Width = 1089
     Height = 41
     Align = alTop
     TabOrder = 0
+    ExplicitTop = 0
     DesignSize = (
       1089
       41)
@@ -71,16 +72,18 @@ object fListaOrdemServico: TfListaOrdemServico
   end
   object pnlOS: TPanel
     Left = 0
-    Top = 177
+    Top = 196
     Width = 1089
-    Height = 274
+    Height = 255
     Align = alClient
     TabOrder = 2
+    ExplicitTop = 177
+    ExplicitHeight = 274
     object dbgOS: TDBGrid
       Left = 1
       Top = 1
       Width = 1087
-      Height = 272
+      Height = 253
       Align = alClient
       BorderStyle = bsNone
       DataSource = DMOrdemServico.dsOS
@@ -91,6 +94,7 @@ object fListaOrdemServico: TfListaOrdemServico
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnDrawColumnCell = dbgOSDrawColumnCell
       OnDblClick = dbgOSDblClick
       OnKeyDown = dbgOSKeyDown
     end
@@ -105,19 +109,6 @@ object fListaOrdemServico: TfListaOrdemServico
     DesignSize = (
       1089
       41)
-    object Label14: TLabel
-      Left = 171
-      Top = 12
-      Width = 109
-      Height = 15
-      Caption = 'Registros por p'#225'gina:'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Calibri Light'
-      Font.Style = []
-      ParentFont = False
-    end
     object lblTotalPaginas: TLabel
       Left = 107
       Top = 12
@@ -138,6 +129,33 @@ object fListaOrdemServico: TfListaOrdemServico
       Width = 38
       Height = 15
       Caption = 'P'#225'gina:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label14: TLabel
+      Left = 171
+      Top = 12
+      Width = 109
+      Height = 15
+      Caption = 'Registros por p'#225'gina:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Calibri Light'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label16: TLabel
+      Left = 406
+      Top = 13
+      Width = 73
+      Height = 15
+      AutoSize = False
+      Caption = 'OS em atraso!'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -227,14 +245,24 @@ object fListaOrdemServico: TfListaOrdemServico
       Value = 1
       OnChange = spnPaginaAtualChange
     end
+    object pnlCorEmAtraso: TPanel
+      Left = 388
+      Top = 13
+      Width = 15
+      Height = 15
+      Color = clTomato
+      ParentBackground = False
+      TabOrder = 5
+    end
   end
   object pnlFiltros: TPanel
     Left = 0
-    Top = 41
+    Top = 60
     Width = 1089
     Height = 136
     Align = alTop
     TabOrder = 1
+    ExplicitTop = 41
     DesignSize = (
       1089
       136)
@@ -628,5 +656,39 @@ object fListaOrdemServico: TfListaOrdemServico
       TitleFont.Style = []
       OnKeyDown = dbgOSKeyDown
     end
+  end
+  object stbTotais: TStatusBar
+    Left = 0
+    Top = 0
+    Width = 1089
+    Height = 19
+    Align = alTop
+    Panels = <
+      item
+        Alignment = taCenter
+        Text = 'Total:'
+        Width = 220
+      end
+      item
+        Alignment = taCenter
+        Text = 'Abertas:'
+        Width = 220
+      end
+      item
+        Alignment = taCenter
+        Text = 'Em andamento:'
+        Width = 220
+      end
+      item
+        Alignment = taCenter
+        Text = 'Conclu'#237'das:'
+        Width = 220
+      end
+      item
+        Alignment = taCenter
+        Text = 'Atrasadas:'
+        Width = 220
+      end>
+    ExplicitLeft = 8
   end
 end

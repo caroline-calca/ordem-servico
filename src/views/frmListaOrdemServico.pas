@@ -9,6 +9,7 @@ uses
   System.Variants,
   System.Classes,
   System.Generics.Collections,
+  System.UITypes,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.Forms,
@@ -20,6 +21,7 @@ uses
   Vcl.Buttons,
   Vcl.ExtCtrls,
   Vcl.ComCtrls,
+  FireDAC.Comp.Client,
 
   untUtils,
   uDMOrdemServico,
@@ -79,10 +81,13 @@ type
     Splitter1: TSplitter;
     Label13: TLabel;
     spnRegPorPagina: TSpinEdit;
-    Label14: TLabel;
     lblTotalPaginas: TLabel;
     spnPaginaAtual: TSpinEdit;
     Label15: TLabel;
+    Label14: TLabel;
+    Label16: TLabel;
+    pnlCorEmAtraso: TPanel;
+    stbTotais: TStatusBar;
     procedure FormCreate(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -100,12 +105,15 @@ type
     procedure btnImprimirClick(Sender: TObject);
     procedure spnPaginaAtualChange(Sender: TObject);
     procedure spnRegPorPaginaChange(Sender: TObject);
+    procedure dbgOSDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     FTotalPaginas: Integer;
 
     procedure Listar;
     procedure ListarRelatorio;
     procedure AtualizarTotalPaginas;
+    procedure AtualizarTotais;
     procedure InicializarPaginacao;
     function ObterStatusSelecionados: TArray<TStatusOS>;
     function MontarFiltro: TOrdemServicoFiltro;
@@ -180,6 +188,21 @@ end;
 procedure TfListaOrdemServico.dbgOSDblClick(Sender: TObject);
 begin
   btnEditarClick(Sender);
+end;
+
+procedure TfListaOrdemServico.dbgOSDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  if DMOrdemServico.qryOS.FieldByName('EM_ATRASO').AsInteger = 1 then
+    dbgOS.Canvas.Brush.Color := TColors.Tomato;
+
+  if gdSelected in State then
+  begin
+    dbgOS.Canvas.Brush.Color := clHighlight;
+    dbgOS.Canvas.Font.Color := clHighlightText;
+  end;
+
+  dbgOS.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 procedure TfListaOrdemServico.dbgOSKeyDown(Sender: TObject; var Key: Word;
@@ -327,6 +350,7 @@ begin
       RegPorPagina);
 
     AtualizarTotalPaginas;
+    AtualizarTotais;
   finally
     Filtro.Free;
   end;
@@ -363,6 +387,34 @@ begin
       spnPaginaAtual.Value := cPaginaPadrao;
 
     lblTotalPaginas.Caption := 'de ' + IntToStr(FTotalPaginas);
+  finally
+    Filtro.Free;
+  end;
+end;
+
+procedure TfListaOrdemServico.AtualizarTotais;
+var
+  PaginaAtual,
+  RegPorPagina: Integer;
+  Filtro: TOrdemServicoFiltro;
+  Qry: TFDQuery;
+begin
+  PaginaAtual := spnPaginaAtual.Value;
+  RegPorPagina := spnRegPorPagina.Value;
+
+  Filtro := MontarFiltro;
+  try
+    DMOrdemServico.ObterTotais(Filtro, Qry);
+
+    try
+      stbTotais.Panels[0].Text := 'Total de OSs: ' + Qry.FieldByName('TOTAL').AsString;
+      stbTotais.Panels[1].Text := 'Abertas: ' + Qry.FieldByName('TOTAL_ABERTAS').AsString;
+      stbTotais.Panels[2].Text := 'Em andamento: ' + Qry.FieldByName('TOTAL_ANDAMENTO').AsString;
+      stbTotais.Panels[3].Text := 'Concluídas: ' + Qry.FieldByName('TOTAL_CONCLUIDAS').AsString;
+      stbTotais.Panels[4].Text := 'Atrasadas: ' + Qry.FieldByName('TOTAL_ATRASADAS').AsString;
+    finally
+      Qry.Free;
+    end;
   finally
     Filtro.Free;
   end;

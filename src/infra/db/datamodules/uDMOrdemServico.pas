@@ -73,6 +73,7 @@ type
     procedure Listar(const AFiltro: TOrdemServicoFiltro; const AOffset, AFetch: Integer); overload;
     procedure ListarRelatorio(const AFiltro: TOrdemServicoFiltro);
     procedure Filtrar(AQry: TFDQuery; AFiltro: TOrdemServicoFiltro);
+    procedure ObterTotais(const AFiltro: TOrdemServicoFiltro; out AQryTotais: TFDQuery);
     function Contar(const AFiltro: TOrdemServicoFiltro): Integer;
   end;
 
@@ -187,6 +188,25 @@ begin
   finally
     qryContar.Free;
   end;
+end;
+
+procedure TDMOrdemServico.ObterTotais(const AFiltro: TOrdemServicoFiltro; out AQryTotais: TFDQuery);
+begin
+  AQryTotais := TFDQuery.Create(nil);
+  AQryTotais.Connection := Connection;
+
+  AQryTotais.SQL.Add('SELECT ');
+  AQryTotais.SQL.Add(' COUNT(*) AS TOTAL, ');
+  AQryTotais.SQL.Add(' SUM(CASE WHEN UPPER(STATUS) LIKE UPPER(''%ABERTA%'') THEN 1 ELSE 0 END) AS TOTAL_ABERTAS, ');
+  AQryTotais.SQL.Add(' SUM(CASE WHEN UPPER(STATUS) LIKE UPPER(''%ANDAMENTO%'') THEN 1 ELSE 0 END) AS TOTAL_ANDAMENTO, ');
+  AQryTotais.SQL.Add(' SUM(CASE WHEN UPPER(STATUS) LIKE UPPER(''%CONCLUIDA%'') THEN 1 ELSE 0 END) AS TOTAL_CONCLUIDAS, ');
+  AQryTotais.SQL.Add(' SUM(CASE WHEN EM_ATRASO = 1 THEN 1 ELSE 0 END) AS TOTAL_ATRASADAS ');
+  AQryTotais.SQL.Add('FROM VW_OS_RESUMO ');
+  AQryTotais.SQL.Add('WHERE 1=1 ');
+
+  Filtrar(AQryTotais, AFiltro);
+
+  AQryTotais.Open;
 end;
 
 procedure TDMOrdemServico.Filtrar(AQry: TFDQuery; AFiltro: TOrdemServicoFiltro);
